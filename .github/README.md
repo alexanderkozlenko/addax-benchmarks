@@ -1,0 +1,7 @@
+## About
+
+Performance benchmarks for .NET libraries that work with CSV files, measurements are published in [discussions](https://github.com/alexanderkozlenko/addax-benchmarks/discussions).
+
+## References
+
+- [RFC 4180 - Common Format and MIME Type for Comma-Separated Values (CSV) Files](https://datatracker.ietf.org/doc/html/rfc4180)

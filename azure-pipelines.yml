@@ -1,0 +1,21 @@
+steps:
+- task: UseDotNet@2
+  inputs:
+    useGlobalJson: true
+- script: >
+    dotnet build $(Build.SourcesDirectory)
+    -p:ContinuousIntegrationBuild=true
+    -c Release
+- script: >
+    dotnet test $(Build.SourcesDirectory)
+    -p:ContinuousIntegrationBuild=true
+    -c Release
+    -l TRX
+    --results-directory $(Common.TestResultsDirectory)
+    --no-build
+- task: PublishTestResults@2
+  inputs:
+    failTaskOnFailedTests: true
+    searchFolder: '$(Common.TestResultsDirectory)'
+    testResultsFiles: '*.trx'
+    testRunner: 'VSTest'

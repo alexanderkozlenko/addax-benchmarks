@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Addax.Formats.Tabular" />
+    <PackageReference Include="CsvHelper" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Addax.Benchmarks.Abstractions\Addax.Benchmarks.Abstractions.csproj" />
+    <ProjectReference Include="..\Addax.Benchmarks.Contracts\Addax.Benchmarks.Contracts.csproj" />
+  </ItemGroup>
+</Project>
