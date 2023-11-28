@@ -4,8 +4,8 @@ namespace Addax.Benchmarks.Contracts;
 
 public struct RecordD
 {
-    public DateTimeOffset Field0;
-    public DateTimeOffset Field1;
-    public DateTimeOffset Field2;
-    public DateTimeOffset Field3;
+    public DateTime Field0;
+    public DateTime Field1;
+    public DateTime Field2;
+    public DateTime Field3;
 }

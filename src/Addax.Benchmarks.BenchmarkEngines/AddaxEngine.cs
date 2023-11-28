@@ -70,13 +70,13 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         while (reader.TryPickRecord())
         {
             reader.TryReadField();
-            reader.TryGetDateTimeOffset(out var field0);
+            reader.TryGetDateTime(out var field0);
             reader.TryReadField();
-            reader.TryGetDateTimeOffset(out var field1);
+            reader.TryGetDateTime(out var field1);
             reader.TryReadField();
-            reader.TryGetDateTimeOffset(out var field2);
+            reader.TryGetDateTime(out var field2);
             reader.TryReadField();
-            reader.TryGetDateTimeOffset(out var field3);
+            reader.TryGetDateTime(out var field3);
 
             var record = new RecordD
             {
@@ -103,7 +103,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             reader.TryReadField();
             reader.TryGetDouble(out var field2);
             reader.TryReadField();
-            reader.TryGetDateTimeOffset(out var field3);
+            reader.TryGetDateTime(out var field3);
 
             var record = new RecordM
             {
@@ -151,10 +151,10 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
 
         foreach (var record in records)
         {
-            writer.WriteDateTimeOffset(record.Field0);
-            writer.WriteDateTimeOffset(record.Field1);
-            writer.WriteDateTimeOffset(record.Field2);
-            writer.WriteDateTimeOffset(record.Field3);
+            writer.WriteDateTime(record.Field0);
+            writer.WriteDateTime(record.Field1);
+            writer.WriteDateTime(record.Field2);
+            writer.WriteDateTime(record.Field3);
             writer.FinishRecord();
         }
     }
@@ -168,7 +168,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             writer.WriteString(record.Field0);
             writer.WriteBoolean(record.Field1);
             writer.WriteDouble(record.Field2);
-            writer.WriteDateTimeOffset(record.Field3);
+            writer.WriteDateTime(record.Field3);
             writer.FinishRecord();
         }
     }

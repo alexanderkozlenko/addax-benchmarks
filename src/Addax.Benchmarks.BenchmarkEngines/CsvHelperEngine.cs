@@ -16,7 +16,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         HasHeaderRecord = false,
     };
 
-    private static readonly string[] s_dateTimeOffsetFormats = ["o"];
+    private static readonly string[] s_dateTimeFormats = ["o"];
 
     public void ReadRecords(Stream stream, ICollection<RecordS> records)
     {
@@ -68,12 +68,15 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
     {
         using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
 
+        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
+        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
+
         while (reader.Read())
         {
-            reader.TryGetField<DateTimeOffset>(0, out var field0);
-            reader.TryGetField<DateTimeOffset>(1, out var field1);
-            reader.TryGetField<DateTimeOffset>(2, out var field2);
-            reader.TryGetField<DateTimeOffset>(3, out var field3);
+            reader.TryGetField<DateTime>(0, out var field0);
+            reader.TryGetField<DateTime>(1, out var field1);
+            reader.TryGetField<DateTime>(2, out var field2);
+            reader.TryGetField<DateTime>(3, out var field3);
 
             var record = new RecordD
             {
@@ -91,12 +94,15 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
     {
         using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
 
+        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
+        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
+
         while (reader.Read())
         {
             reader.TryGetField<string>(0, out var field0);
             reader.TryGetField<bool>(1, out var field1);
             reader.TryGetField<double>(2, out var field2);
-            reader.TryGetField<DateTimeOffset>(3, out var field3);
+            reader.TryGetField<DateTime>(3, out var field3);
 
             var record = new RecordM
             {
@@ -142,7 +148,8 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
-        writer.Context.TypeConverterOptionsCache.GetOptions<DateTimeOffset>().Formats = s_dateTimeOffsetFormats;
+        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
+        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
 
         foreach (var record in records)
         {
@@ -158,7 +165,8 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
-        writer.Context.TypeConverterOptionsCache.GetOptions<DateTimeOffset>().Formats = s_dateTimeOffsetFormats;
+        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
+        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
 
         foreach (var record in records)
         {

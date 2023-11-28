@@ -7,5 +7,5 @@ public struct RecordM
     public string? Field0;
     public bool Field1;
     public double Field2;
-    public DateTimeOffset Field3;
+    public DateTime Field3;
 }

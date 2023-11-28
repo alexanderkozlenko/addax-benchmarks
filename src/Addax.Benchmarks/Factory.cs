@@ -97,10 +97,10 @@ internal static class Factory
 
         for (var i = 0; i < records.Length; i++)
         {
-            records[i].Field0 = new(1969, 07, 24, 16, 50, 35, TimeSpan.Zero);
-            records[i].Field1 = new(1969, 07, 24, 16, 50, 35, TimeSpan.Zero);
-            records[i].Field2 = new(1969, 07, 24, 06, 50, 35, TimeSpan.FromHours(-10));
-            records[i].Field3 = new(1969, 07, 24, 06, 50, 35, TimeSpan.FromHours(-10));
+            records[i].Field0 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
+            records[i].Field1 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
+            records[i].Field2 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
+            records[i].Field3 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
         }
 
         return records;
@@ -115,7 +115,7 @@ internal static class Factory
             records[i].Field0 = "____\"______\"____";
             records[i].Field1 = true;
             records[i].Field2 = Math.PI;
-            records[i].Field3 = new(1969, 07, 24, 06, 50, 35, TimeSpan.FromHours(-10));
+            records[i].Field3 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
         }
 
         return records;
@@ -174,10 +174,10 @@ internal static class Factory
         {
             foreach (var record in records)
             {
-                writer.WriteDateTimeOffset(record.Field0);
-                writer.WriteDateTimeOffset(record.Field1);
-                writer.WriteDateTimeOffset(record.Field2);
-                writer.WriteDateTimeOffset(record.Field3);
+                writer.WriteDateTime(record.Field0);
+                writer.WriteDateTime(record.Field1);
+                writer.WriteDateTime(record.Field2);
+                writer.WriteDateTime(record.Field3);
                 writer.FinishRecord();
             }
         }
@@ -199,7 +199,7 @@ internal static class Factory
                 writer.WriteString(record.Field0);
                 writer.WriteBoolean(record.Field1);
                 writer.WriteDouble(record.Field2);
-                writer.WriteDateTimeOffset(record.Field3);
+                writer.WriteDateTime(record.Field3);
                 writer.FinishRecord();
             }
         }

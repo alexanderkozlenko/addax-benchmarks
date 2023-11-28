@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Addax.Formats.Tabular" />
     <PackageReference Include="CsvHelper" />
+    <PackageReference Include="Microsoft.Data.Analysis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Addax.Benchmarks.Abstractions\Addax.Benchmarks.Abstractions.csproj" />

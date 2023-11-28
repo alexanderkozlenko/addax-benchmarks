@@ -24,7 +24,7 @@ public class Benchmark<T> : Benchmark
         _recordsR = new(_recordsW.Length);
     }
 
-    [Benchmark(Description = "read records")]
+    [Benchmark(Description = "read")]
     [ArgumentsSource(nameof(EnginesT))]
     public void ReadRecords(IBenchmarkEngine<T> Engine)
     {
@@ -34,7 +34,7 @@ public class Benchmark<T> : Benchmark
         Engine.ReadRecords(_streamR, _recordsR);
     }
 
-    [Benchmark(Description = "write records")]
+    [Benchmark(Description = "write")]
     [ArgumentsSource(nameof(EnginesT))]
     public void WriteRecords(IBenchmarkEngine<T> Engine)
     {
