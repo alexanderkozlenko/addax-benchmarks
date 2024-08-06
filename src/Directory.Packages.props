@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Addax.Formats.Tabular" Version="1.2.0" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <PackageVersion Include="Microsoft.Data.Analysis" Version="0.21.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
