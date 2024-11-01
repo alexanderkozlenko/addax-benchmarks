@@ -1,6 +1,6 @@
 ## About
 
-Performance benchmarks for .NET libraries that work with CSV files, measurements are published in [discussions](https://github.com/alexanderkozlenko/addax-benchmarks/discussions).
+Benchmarks for .NET libraries that work with CSV, measurements are published in [discussions](https://github.com/alexanderkozlenko/addax-benchmarks/discussions).
 
 ## References
 

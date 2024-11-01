@@ -1,16 +1,12 @@
 ﻿<Project>
   <PropertyGroup>
     <AnalysisMode>Recommended</AnalysisMode>
-    <ArtifactsPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', 'artifacts'))</ArtifactsPath>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <NoWarn>$(NoWarn);EnableGenerateDocumentationFile;</NoWarn>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <RestoreUseStaticGraphEvaluation>true</RestoreUseStaticGraphEvaluation>
     <UseArtifactsOutput>true</UseArtifactsOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 </Project>
