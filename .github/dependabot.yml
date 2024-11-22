@@ -7,7 +7,7 @@ updates:
   - package-ecosystem: "dotnet-sdk"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
@@ -16,4 +16,4 @@ updates:
        Microsoft:
           patterns:
             - "Microsoft.*"
-            - "MSTest"
+            - "MS*"
