@@ -3,7 +3,10 @@ using Addax.Formats.Tabular;
 
 namespace Addax.Benchmarks.BenchmarkEngines;
 
-public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<Record<string>>, IBenchmarkEngine<Record<double>>, IBenchmarkEngine<Record<DateTime>>
+public sealed class AddaxEngine : BenchmarkEngine,
+    IBenchmarkEngine<Record<string>>,
+    IBenchmarkEngine<Record<double>>,
+    IBenchmarkEngine<Record<DateTime>>
 {
     private static readonly TabularDialect s_dialect = new("\r\n", ',', '"');
 

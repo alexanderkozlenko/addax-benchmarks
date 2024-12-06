@@ -5,7 +5,10 @@ using CsvHelper.Configuration;
 
 namespace Addax.Benchmarks.BenchmarkEngines;
 
-public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<Record<string>>, IBenchmarkEngine<Record<double>>, IBenchmarkEngine<Record<DateTime>>
+public sealed class CsvHelperEngine : BenchmarkEngine,
+    IBenchmarkEngine<Record<string>>,
+    IBenchmarkEngine<Record<double>>,
+    IBenchmarkEngine<Record<DateTime>>
 {
     private static readonly CsvConfiguration s_configuration = new(CultureInfo.InvariantCulture)
     {

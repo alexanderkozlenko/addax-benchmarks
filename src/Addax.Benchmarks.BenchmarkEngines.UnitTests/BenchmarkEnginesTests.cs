@@ -10,7 +10,7 @@ public sealed class BenchmarkEnginesTests
     private static readonly BenchmarkEngine[] s_engines = CreateEngines();
 
     [TestMethod]
-    [DynamicData(nameof(EnginesS))]
+    [DynamicData(nameof(EnginesForString))]
     public void HandleString(IBenchmarkEngine<Record<string>> provider)
     {
         var recordsW = new Record<string>[]
@@ -42,7 +42,7 @@ public sealed class BenchmarkEnginesTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(EnginesN))]
+    [DynamicData(nameof(EnginesForDouble))]
     public void HandleDouble(IBenchmarkEngine<Record<double>> provider)
     {
         var recordsW = new Record<double>[]
@@ -74,7 +74,7 @@ public sealed class BenchmarkEnginesTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(EnginesD))]
+    [DynamicData(nameof(EnginesForDateTime))]
     public void HandleDateTime(IBenchmarkEngine<Record<DateTime>> provider)
     {
         var recordsW = new Record<DateTime>[]
@@ -105,16 +105,7 @@ public sealed class BenchmarkEnginesTests
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field3);
     }
 
-    private static BenchmarkEngine[] CreateEngines()
-    {
-        return Assembly.Load("Addax.Benchmarks.BenchmarkEngines").GetExportedTypes()
-            .Where(static x => x.BaseType == typeof(BenchmarkEngine))
-            .Select(static x => (BenchmarkEngine)Activator.CreateInstance(x)!)
-            .OrderBy(static x => x.ToString())
-            .ToArray();
-    }
-
-    public static IEnumerable<object[]> EnginesS
+    public static IEnumerable<object[]> EnginesForString
     {
         get
         {
@@ -122,7 +113,7 @@ public sealed class BenchmarkEnginesTests
         }
     }
 
-    public static IEnumerable<object[]> EnginesN
+    public static IEnumerable<object[]> EnginesForDouble
     {
         get
         {
@@ -130,11 +121,20 @@ public sealed class BenchmarkEnginesTests
         }
     }
 
-    public static IEnumerable<object[]> EnginesD
+    public static IEnumerable<object[]> EnginesForDateTime
     {
         get
         {
             return s_engines.OfType<IBenchmarkEngine<Record<DateTime>>>().Select(static x => new[] { x });
         }
+    }
+
+    private static BenchmarkEngine[] CreateEngines()
+    {
+        return Assembly.Load("Addax.Benchmarks.BenchmarkEngines").GetExportedTypes()
+            .Where(static x => x.BaseType == typeof(BenchmarkEngine))
+            .Select(static x => (BenchmarkEngine)Activator.CreateInstance(x)!)
+            .OrderBy(static x => x.ToString())
+            .ToArray();
     }
 }

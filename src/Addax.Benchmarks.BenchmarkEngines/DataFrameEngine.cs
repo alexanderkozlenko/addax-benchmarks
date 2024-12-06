@@ -3,9 +3,12 @@ using Microsoft.Data.Analysis;
 
 namespace Addax.Benchmarks.BenchmarkEngines;
 
-public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<string>>, IBenchmarkEngine<Record<double>>, IBenchmarkEngine<Record<DateTime>>
+public sealed class DataFrameEngine : BenchmarkEngine,
+    IBenchmarkEngine<Record<string>>,
+    IBenchmarkEngine<Record<double>>,
+    IBenchmarkEngine<Record<DateTime>>
 {
-    private static readonly Type[] s_dataTypesS =
+    private static readonly Type[] s_dataTypesForString =
     [
         typeof(string),
         typeof(string),
@@ -13,7 +16,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         typeof(string),
     ];
 
-    private static readonly Type[] s_dataTypesN =
+    private static readonly Type[] s_dataTypesForDouble =
     [
         typeof(double),
         typeof(double),
@@ -21,7 +24,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         typeof(double),
     ];
 
-    private static readonly Type[] s_dataTypesD =
+    private static readonly Type[] s_dataTypesForDateTime =
     [
         typeof(DateTime),
         typeof(DateTime),
@@ -31,7 +34,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
 
     public void ReadRecords(Stream stream, ICollection<Record<string>> records)
     {
-        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesS);
+        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesForString);
 
         foreach (var row in frame.Rows)
         {
@@ -49,7 +52,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
 
     public void ReadRecords(Stream stream, ICollection<Record<double>> records)
     {
-        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesN);
+        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesForDouble);
 
         foreach (var row in frame.Rows)
         {
@@ -67,7 +70,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
 
     public void ReadRecords(Stream stream, ICollection<Record<DateTime>> records)
     {
-        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesD);
+        var frame = DataFrame.LoadCsv(stream, header: false, dataTypes: s_dataTypesForDateTime);
 
         foreach (var row in frame.Rows)
         {
