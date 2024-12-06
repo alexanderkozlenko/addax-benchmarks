@@ -1,12 +1,11 @@
 ﻿using System.Globalization;
 using Addax.Benchmarks.Abstractions;
-using Addax.Benchmarks.Contracts;
 using CsvHelper;
 using CsvHelper.Configuration;
 
 namespace Addax.Benchmarks.BenchmarkEngines;
 
-public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IBenchmarkEngine<RecordN>, IBenchmarkEngine<RecordD>, IBenchmarkEngine<RecordM>
+public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<Record<string>>, IBenchmarkEngine<Record<double>>, IBenchmarkEngine<Record<DateTime>>
 {
     private static readonly CsvConfiguration s_configuration = new(CultureInfo.InvariantCulture)
     {
@@ -14,11 +13,12 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         Delimiter = ",",
         Quote = '"',
         HasHeaderRecord = false,
+        CacheFields = IsSwitchEnabled("ENABLE_STRING_POOLING"),
     };
 
     private static readonly string[] s_dateTimeFormats = ["o"];
 
-    public void ReadRecords(Stream stream, ICollection<RecordS> records)
+    public void ReadRecords(Stream stream, ICollection<Record<string>> records)
     {
         using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
 
@@ -29,7 +29,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
             reader.TryGetField<string>(2, out var field2);
             reader.TryGetField<string>(3, out var field3);
 
-            var record = new RecordS
+            var record = new Record<string>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -41,7 +41,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordN> records)
+    public void ReadRecords(Stream stream, ICollection<Record<double>> records)
     {
         using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
 
@@ -52,7 +52,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
             reader.TryGetField<double>(2, out var field2);
             reader.TryGetField<double>(3, out var field3);
 
-            var record = new RecordN
+            var record = new Record<double>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -64,7 +64,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordD> records)
+    public void ReadRecords(Stream stream, ICollection<Record<DateTime>> records)
     {
         using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
 
@@ -78,7 +78,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
             reader.TryGetField<DateTime>(2, out var field2);
             reader.TryGetField<DateTime>(3, out var field3);
 
-            var record = new RecordD
+            var record = new Record<DateTime>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -90,33 +90,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordM> records)
-    {
-        using var reader = new CsvReader(new StreamReader(stream, leaveOpen: true), s_configuration);
-
-        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
-        reader.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
-
-        while (reader.Read())
-        {
-            reader.TryGetField<string>(0, out var field0);
-            reader.TryGetField<bool>(1, out var field1);
-            reader.TryGetField<double>(2, out var field2);
-            reader.TryGetField<DateTime>(3, out var field3);
-
-            var record = new RecordM
-            {
-                Field0 = field0,
-                Field1 = field1,
-                Field2 = field2,
-                Field3 = field3,
-            };
-
-            records.Add(record);
-        }
-    }
-
-    public void WriteRecords(Stream stream, RecordS[] records)
+    public void WriteRecords(Stream stream, Record<string>[] records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
@@ -130,7 +104,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         }
     }
 
-    public void WriteRecords(Stream stream, RecordN[] records)
+    public void WriteRecords(Stream stream, Record<double>[] records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
@@ -144,24 +118,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>
         }
     }
 
-    public void WriteRecords(Stream stream, RecordD[] records)
-    {
-        using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
-
-        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = s_dateTimeFormats;
-        writer.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AdjustToUniversal;
-
-        foreach (var record in records)
-        {
-            writer.WriteField(record.Field0);
-            writer.WriteField(record.Field1);
-            writer.WriteField(record.Field2);
-            writer.WriteField(record.Field3);
-            writer.NextRecord();
-        }
-    }
-
-    public void WriteRecords(Stream stream, RecordM[] records)
+    public void WriteRecords(Stream stream, Record<DateTime>[] records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 

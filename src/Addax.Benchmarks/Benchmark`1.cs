@@ -2,15 +2,13 @@
 #pragma warning disable IDE1006
 
 using Addax.Benchmarks.Abstractions;
-using Addax.Benchmarks.Contracts;
 using BenchmarkDotNet.Attributes;
 
 namespace Addax.Benchmarks;
 
-[GenericTypeArguments(typeof(RecordS))]
-[GenericTypeArguments(typeof(RecordN))]
-[GenericTypeArguments(typeof(RecordD))]
-[GenericTypeArguments(typeof(RecordM))]
+[GenericTypeArguments(typeof(Record<string>))]
+[GenericTypeArguments(typeof(Record<double>))]
+[GenericTypeArguments(typeof(Record<DateTime>))]
 public class Benchmark<T> : Benchmark
 {
     private readonly MemoryStream _streamR = Factory.CreateRecordStream<T>();

@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Addax.Benchmarks.Contracts;
+using Addax.Benchmarks.Abstractions;
 using Addax.Formats.Tabular;
 
 namespace Addax.Benchmarks;
@@ -13,24 +13,19 @@ internal static class Factory
 
     public static T[] CreateRecordArray<T>()
     {
-        if (typeof(T) == typeof(RecordS))
+        if (typeof(T) == typeof(Record<string>))
         {
             return Unsafe.As<T[]>(CreateRecordSArray());
         }
 
-        if (typeof(T) == typeof(RecordN))
+        if (typeof(T) == typeof(Record<double>))
         {
             return Unsafe.As<T[]>(CreateRecordNArray());
         }
 
-        if (typeof(T) == typeof(RecordD))
+        if (typeof(T) == typeof(Record<DateTime>))
         {
             return Unsafe.As<T[]>(CreateRecordDArray());
-        }
-
-        if (typeof(T) == typeof(RecordM))
-        {
-            return Unsafe.As<T[]>(CreateRecordMArray());
         }
 
         throw new NotSupportedException();
@@ -38,32 +33,27 @@ internal static class Factory
 
     public static MemoryStream CreateRecordStream<T>()
     {
-        if (typeof(T) == typeof(RecordS))
+        if (typeof(T) == typeof(Record<string>))
         {
             return CreateRecordSStream();
         }
 
-        if (typeof(T) == typeof(RecordN))
+        if (typeof(T) == typeof(Record<double>))
         {
             return CreateRecordNStream();
         }
 
-        if (typeof(T) == typeof(RecordD))
+        if (typeof(T) == typeof(Record<DateTime>))
         {
             return CreateRecordDStream();
-        }
-
-        if (typeof(T) == typeof(RecordM))
-        {
-            return CreateRecordMStream();
         }
 
         throw new NotSupportedException();
     }
 
-    private static RecordS[] CreateRecordSArray()
+    private static Record<string>[] CreateRecordSArray()
     {
-        var records = new RecordS[s_count];
+        var records = new Record<string>[s_count];
 
         for (var i = 0; i < records.Length; i++)
         {
@@ -76,9 +66,9 @@ internal static class Factory
         return records;
     }
 
-    private static RecordN[] CreateRecordNArray()
+    private static Record<double>[] CreateRecordNArray()
     {
-        var records = new RecordN[s_count];
+        var records = new Record<double>[s_count];
 
         for (var i = 0; i < records.Length; i++)
         {
@@ -91,30 +81,15 @@ internal static class Factory
         return records;
     }
 
-    private static RecordD[] CreateRecordDArray()
+    private static Record<DateTime>[] CreateRecordDArray()
     {
-        var records = new RecordD[s_count];
+        var records = new Record<DateTime>[s_count];
 
         for (var i = 0; i < records.Length; i++)
         {
             records[i].Field0 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
             records[i].Field1 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
             records[i].Field2 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
-            records[i].Field3 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
-        }
-
-        return records;
-    }
-
-    private static RecordM[] CreateRecordMArray()
-    {
-        var records = new RecordM[s_count];
-
-        for (var i = 0; i < records.Length; i++)
-        {
-            records[i].Field0 = "____\"______\"____";
-            records[i].Field1 = true;
-            records[i].Field2 = Math.PI;
             records[i].Field3 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc);
         }
 
@@ -177,28 +152,6 @@ internal static class Factory
                 writer.WriteDateTime(record.Field0);
                 writer.WriteDateTime(record.Field1);
                 writer.WriteDateTime(record.Field2);
-                writer.WriteDateTime(record.Field3);
-                writer.FinishRecord();
-            }
-        }
-
-        stream.Seek(0, SeekOrigin.Begin);
-
-        return stream;
-    }
-
-    public static MemoryStream CreateRecordMStream()
-    {
-        var records = CreateRecordMArray();
-        var stream = new MemoryStream();
-
-        using (var writer = new TabularWriter(stream, s_dialect, s_options))
-        {
-            foreach (var record in records)
-            {
-                writer.WriteString(record.Field0);
-                writer.WriteBoolean(record.Field1);
-                writer.WriteDouble(record.Field2);
                 writer.WriteDateTime(record.Field3);
                 writer.FinishRecord();
             }

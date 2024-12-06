@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Addax.Benchmarks.Abstractions;
-using Addax.Benchmarks.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Addax.Benchmarks.BenchmarkEngines.UnitTests;
@@ -12,9 +11,9 @@ public sealed class BenchmarkEnginesTests
 
     [TestMethod]
     [DynamicData(nameof(EnginesS))]
-    public void HandleRecordsS(IBenchmarkEngine<RecordS> provider)
+    public void HandleString(IBenchmarkEngine<Record<string>> provider)
     {
-        var recordsW = new RecordS[]
+        var recordsW = new Record<string>[]
         {
             new()
             {
@@ -31,7 +30,7 @@ public sealed class BenchmarkEnginesTests
 
         stream.Seek(0, SeekOrigin.Begin);
 
-        var recordsR = new List<RecordS>();
+        var recordsR = new List<Record<string>>();
 
         provider.ReadRecords(stream, recordsR);
 
@@ -44,9 +43,9 @@ public sealed class BenchmarkEnginesTests
 
     [TestMethod]
     [DynamicData(nameof(EnginesN))]
-    public void HandleRecordsN(IBenchmarkEngine<RecordN> provider)
+    public void HandleDouble(IBenchmarkEngine<Record<double>> provider)
     {
-        var recordsW = new RecordN[]
+        var recordsW = new Record<double>[]
         {
             new()
             {
@@ -63,7 +62,7 @@ public sealed class BenchmarkEnginesTests
 
         stream.Seek(0, SeekOrigin.Begin);
 
-        var recordsR = new List<RecordN>();
+        var recordsR = new List<Record<double>>();
 
         provider.ReadRecords(stream, recordsR);
 
@@ -76,9 +75,9 @@ public sealed class BenchmarkEnginesTests
 
     [TestMethod]
     [DynamicData(nameof(EnginesD))]
-    public void HandleRecordsD(IBenchmarkEngine<RecordD> provider)
+    public void HandleDateTime(IBenchmarkEngine<Record<DateTime>> provider)
     {
-        var recordsW = new RecordD[]
+        var recordsW = new Record<DateTime>[]
         {
             new()
             {
@@ -95,7 +94,7 @@ public sealed class BenchmarkEnginesTests
 
         stream.Seek(0, SeekOrigin.Begin);
 
-        var recordsR = new List<RecordD>();
+        var recordsR = new List<Record<DateTime>>();
 
         provider.ReadRecords(stream, recordsR);
 
@@ -103,38 +102,6 @@ public sealed class BenchmarkEnginesTests
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field0);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field1);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field2);
-        Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field3);
-    }
-
-    [TestMethod]
-    [DynamicData(nameof(EnginesM))]
-    public void HandleRecordsD(IBenchmarkEngine<RecordM> provider)
-    {
-        var recordsW = new RecordM[]
-        {
-            new()
-            {
-                Field0 = "____\"______\"____",
-                Field1 = true,
-                Field2 = Math.PI,
-                Field3 = new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc),
-            }
-        };
-
-        using var stream = new MemoryStream();
-
-        provider.WriteRecords(stream, recordsW);
-
-        stream.Seek(0, SeekOrigin.Begin);
-
-        var recordsR = new List<RecordM>();
-
-        provider.ReadRecords(stream, recordsR);
-
-        Assert.AreEqual(1, recordsR.Count);
-        Assert.AreEqual("____\"______\"____", recordsR[0].Field0);
-        Assert.AreEqual(true, recordsR[0].Field1);
-        Assert.AreEqual(Math.PI, recordsR[0].Field2);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field3);
     }
 
@@ -152,7 +119,7 @@ public sealed class BenchmarkEnginesTests
     {
         get
         {
-            return s_engines.OfType<IBenchmarkEngine<RecordS>>().Select(static x => new[] { x });
+            return s_engines.OfType<IBenchmarkEngine<Record<string>>>().Select(static x => new[] { x });
         }
     }
 
@@ -160,7 +127,7 @@ public sealed class BenchmarkEnginesTests
     {
         get
         {
-            return s_engines.OfType<IBenchmarkEngine<RecordN>>().Select(static x => new[] { x });
+            return s_engines.OfType<IBenchmarkEngine<Record<double>>>().Select(static x => new[] { x });
         }
     }
 
@@ -168,15 +135,7 @@ public sealed class BenchmarkEnginesTests
     {
         get
         {
-            return s_engines.OfType<IBenchmarkEngine<RecordD>>().Select(static x => new[] { x });
-        }
-    }
-
-    public static IEnumerable<object[]> EnginesM
-    {
-        get
-        {
-            return s_engines.OfType<IBenchmarkEngine<RecordM>>().Select(static x => new[] { x });
+            return s_engines.OfType<IBenchmarkEngine<Record<DateTime>>>().Select(static x => new[] { x });
         }
     }
 }

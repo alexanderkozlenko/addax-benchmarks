@@ -1,15 +1,19 @@
 ﻿using Addax.Benchmarks.Abstractions;
-using Addax.Benchmarks.Contracts;
 using Addax.Formats.Tabular;
 
 namespace Addax.Benchmarks.BenchmarkEngines;
 
-public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IBenchmarkEngine<RecordN>, IBenchmarkEngine<RecordD>, IBenchmarkEngine<RecordM>
+public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<Record<string>>, IBenchmarkEngine<Record<double>>, IBenchmarkEngine<Record<DateTime>>
 {
     private static readonly TabularDialect s_dialect = new("\r\n", ',', '"');
-    private static readonly TabularOptions s_options = new() { LeaveOpen = true };
 
-    public void ReadRecords(Stream stream, ICollection<RecordS> records)
+    private static readonly TabularOptions s_options = new()
+    {
+        LeaveOpen = true,
+        StringFactory = IsSwitchEnabled("ENABLE_STRING_POOLING") ? new(maxLength: 128) : null,
+    };
+
+    public void ReadRecords(Stream stream, ICollection<Record<string>> records)
     {
         using var reader = new TabularReader(stream, s_dialect, s_options);
 
@@ -24,7 +28,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             reader.TryReadField();
             reader.TryGetString(out var field3);
 
-            var record = new RecordS
+            var record = new Record<string>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -36,7 +40,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordN> records)
+    public void ReadRecords(Stream stream, ICollection<Record<double>> records)
     {
         using var reader = new TabularReader(stream, s_dialect, s_options);
 
@@ -51,7 +55,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             reader.TryReadField();
             reader.TryGetDouble(out var field3);
 
-            var record = new RecordN
+            var record = new Record<double>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -63,7 +67,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordD> records)
+    public void ReadRecords(Stream stream, ICollection<Record<DateTime>> records)
     {
         using var reader = new TabularReader(stream, s_dialect, s_options);
 
@@ -78,7 +82,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             reader.TryReadField();
             reader.TryGetDateTime(out var field3);
 
-            var record = new RecordD
+            var record = new Record<DateTime>
             {
                 Field0 = field0,
                 Field1 = field1,
@@ -90,34 +94,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         }
     }
 
-    public void ReadRecords(Stream stream, ICollection<RecordM> records)
-    {
-        using var reader = new TabularReader(stream, s_dialect, s_options);
-
-        while (reader.TryPickRecord())
-        {
-            reader.TryReadField();
-            reader.TryGetString(out var field0);
-            reader.TryReadField();
-            reader.TryGetBoolean(out var field1);
-            reader.TryReadField();
-            reader.TryGetDouble(out var field2);
-            reader.TryReadField();
-            reader.TryGetDateTime(out var field3);
-
-            var record = new RecordM
-            {
-                Field0 = field0,
-                Field1 = field1,
-                Field2 = field2,
-                Field3 = field3,
-            };
-
-            records.Add(record);
-        }
-    }
-
-    public void WriteRecords(Stream stream, RecordS[] records)
+    public void WriteRecords(Stream stream, Record<string>[] records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 
@@ -131,7 +108,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         }
     }
 
-    public void WriteRecords(Stream stream, RecordN[] records)
+    public void WriteRecords(Stream stream, Record<double>[] records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 
@@ -145,7 +122,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
         }
     }
 
-    public void WriteRecords(Stream stream, RecordD[] records)
+    public void WriteRecords(Stream stream, Record<DateTime>[] records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 
@@ -154,20 +131,6 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<RecordS>, IB
             writer.WriteDateTime(record.Field0);
             writer.WriteDateTime(record.Field1);
             writer.WriteDateTime(record.Field2);
-            writer.WriteDateTime(record.Field3);
-            writer.FinishRecord();
-        }
-    }
-
-    public void WriteRecords(Stream stream, RecordM[] records)
-    {
-        using var writer = new TabularWriter(stream, s_dialect, s_options);
-
-        foreach (var record in records)
-        {
-            writer.WriteString(record.Field0);
-            writer.WriteBoolean(record.Field1);
-            writer.WriteDouble(record.Field2);
             writer.WriteDateTime(record.Field3);
             writer.FinishRecord();
         }

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Addax.Benchmarks", "src\Add
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Addax.Benchmarks.Abstractions", "src\Addax.Benchmarks.Abstractions\Addax.Benchmarks.Abstractions.csproj", "{EB69871B-D6E4-4B69-8614-2B2CF3D4BEFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Addax.Benchmarks.Contracts", "src\Addax.Benchmarks.Contracts\Addax.Benchmarks.Contracts.csproj", "{347EDBEE-B76F-4325-AEC3-A012FA239840}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Addax.Benchmarks.BenchmarkEngines", "src\Addax.Benchmarks.BenchmarkEngines\Addax.Benchmarks.BenchmarkEngines.csproj", "{FAE007F6-18A1-4596-A1AA-87597A5633DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Addax.Benchmarks.BenchmarkEngines.UnitTests", "src\Addax.Benchmarks.BenchmarkEngines.UnitTests\Addax.Benchmarks.BenchmarkEngines.UnitTests.csproj", "{50C6BCB3-752C-48BD-8489-BFBACCC0ADBA}"
@@ -33,10 +31,6 @@ Global
 		{EB69871B-D6E4-4B69-8614-2B2CF3D4BEFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB69871B-D6E4-4B69-8614-2B2CF3D4BEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB69871B-D6E4-4B69-8614-2B2CF3D4BEFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{347EDBEE-B76F-4325-AEC3-A012FA239840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{347EDBEE-B76F-4325-AEC3-A012FA239840}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{347EDBEE-B76F-4325-AEC3-A012FA239840}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{347EDBEE-B76F-4325-AEC3-A012FA239840}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FAE007F6-18A1-4596-A1AA-87597A5633DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAE007F6-18A1-4596-A1AA-87597A5633DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAE007F6-18A1-4596-A1AA-87597A5633DF}.Release|Any CPU.ActiveCfg = Release|Any CPU

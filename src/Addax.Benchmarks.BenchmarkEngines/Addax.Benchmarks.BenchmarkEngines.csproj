@@ -11,6 +11,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Addax.Benchmarks.Abstractions\Addax.Benchmarks.Abstractions.csproj" />
-    <ProjectReference Include="..\Addax.Benchmarks.Contracts\Addax.Benchmarks.Contracts.csproj" />
   </ItemGroup>
 </Project>
