@@ -7,7 +7,7 @@ namespace Addax.Benchmarks.BenchmarkEngines.UnitTests;
 [TestClass]
 public sealed class BenchmarkEnginesTests
 {
-    private static readonly BenchmarkEngine[] s_engines = DiscoverEngines();
+    private static readonly BenchmarkEngine[] s_engines = CreateEngines();
 
     [TestMethod]
     [DynamicData(nameof(EnginesS))]
@@ -105,13 +105,12 @@ public sealed class BenchmarkEnginesTests
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field3);
     }
 
-    private static BenchmarkEngine[] DiscoverEngines()
+    private static BenchmarkEngine[] CreateEngines()
     {
-        return Assembly
-            .Load("Addax.Benchmarks.BenchmarkEngines")
-            .GetTypes()
+        return Assembly.Load("Addax.Benchmarks.BenchmarkEngines").GetExportedTypes()
             .Where(static x => x.BaseType == typeof(BenchmarkEngine))
             .Select(static x => (BenchmarkEngine)Activator.CreateInstance(x)!)
+            .OrderBy(static x => x.ToString())
             .ToArray();
     }
 

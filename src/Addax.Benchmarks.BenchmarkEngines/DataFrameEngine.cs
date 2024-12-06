@@ -83,7 +83,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         }
     }
 
-    public void WriteRecords(Stream stream, Record<string>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<string>> records)
     {
         var columns = (DataFrameColumn[])
         [
@@ -109,7 +109,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         DataFrame.SaveCsv(frame, stream, header: false);
     }
 
-    public void WriteRecords(Stream stream, Record<double>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<double>> records)
     {
         var columns = (DataFrameColumn[])
         [
@@ -135,7 +135,7 @@ public sealed class DataFrameEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         DataFrame.SaveCsv(frame, stream, header: false);
     }
 
-    public void WriteRecords(Stream stream, Record<DateTime>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<DateTime>> records)
     {
         var columns = (DataFrameColumn[])
         [

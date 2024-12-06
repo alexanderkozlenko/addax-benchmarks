@@ -94,7 +94,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<Record<strin
         }
     }
 
-    public void WriteRecords(Stream stream, Record<string>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<string>> records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 
@@ -108,7 +108,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<Record<strin
         }
     }
 
-    public void WriteRecords(Stream stream, Record<double>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<double>> records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 
@@ -122,7 +122,7 @@ public sealed class AddaxEngine : BenchmarkEngine, IBenchmarkEngine<Record<strin
         }
     }
 
-    public void WriteRecords(Stream stream, Record<DateTime>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<DateTime>> records)
     {
         using var writer = new TabularWriter(stream, s_dialect, s_options);
 

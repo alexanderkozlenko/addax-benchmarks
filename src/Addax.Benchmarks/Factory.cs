@@ -6,54 +6,52 @@ namespace Addax.Benchmarks;
 
 internal static class Factory
 {
-    private const int s_count = 1024 * 1024;
-
     private static readonly TabularDialect s_dialect = new("\r\n", ',', '"');
     private static readonly TabularOptions s_options = new() { LeaveOpen = true };
 
-    public static T[] CreateRecordArray<T>()
+    public static T[] CreateRecordArray<T>(int count)
     {
         if (typeof(T) == typeof(Record<string>))
         {
-            return Unsafe.As<T[]>(CreateRecordSArray());
+            return Unsafe.As<T[]>(CreateRecordSArray(count));
         }
 
         if (typeof(T) == typeof(Record<double>))
         {
-            return Unsafe.As<T[]>(CreateRecordNArray());
+            return Unsafe.As<T[]>(CreateRecordNArray(count));
         }
 
         if (typeof(T) == typeof(Record<DateTime>))
         {
-            return Unsafe.As<T[]>(CreateRecordDArray());
+            return Unsafe.As<T[]>(CreateRecordDArray(count));
         }
 
         throw new NotSupportedException();
     }
 
-    public static MemoryStream CreateRecordStream<T>()
+    public static MemoryStream CreateRecordStream<T>(int count)
     {
         if (typeof(T) == typeof(Record<string>))
         {
-            return CreateRecordSStream();
+            return CreateRecordSStream(count);
         }
 
         if (typeof(T) == typeof(Record<double>))
         {
-            return CreateRecordNStream();
+            return CreateRecordNStream(count);
         }
 
         if (typeof(T) == typeof(Record<DateTime>))
         {
-            return CreateRecordDStream();
+            return CreateRecordDStream(count);
         }
 
         throw new NotSupportedException();
     }
 
-    private static Record<string>[] CreateRecordSArray()
+    private static Record<string>[] CreateRecordSArray(int count)
     {
-        var records = new Record<string>[s_count];
+        var records = new Record<string>[count];
 
         for (var i = 0; i < records.Length; i++)
         {
@@ -66,9 +64,9 @@ internal static class Factory
         return records;
     }
 
-    private static Record<double>[] CreateRecordNArray()
+    private static Record<double>[] CreateRecordNArray(int count)
     {
-        var records = new Record<double>[s_count];
+        var records = new Record<double>[count];
 
         for (var i = 0; i < records.Length; i++)
         {
@@ -81,9 +79,9 @@ internal static class Factory
         return records;
     }
 
-    private static Record<DateTime>[] CreateRecordDArray()
+    private static Record<DateTime>[] CreateRecordDArray(int count)
     {
-        var records = new Record<DateTime>[s_count];
+        var records = new Record<DateTime>[count];
 
         for (var i = 0; i < records.Length; i++)
         {
@@ -96,9 +94,9 @@ internal static class Factory
         return records;
     }
 
-    public static MemoryStream CreateRecordSStream()
+    public static MemoryStream CreateRecordSStream(int count)
     {
-        var records = CreateRecordSArray();
+        var records = CreateRecordSArray(count);
         var stream = new MemoryStream();
 
         using (var writer = new TabularWriter(stream, s_dialect, s_options))
@@ -118,9 +116,9 @@ internal static class Factory
         return stream;
     }
 
-    public static MemoryStream CreateRecordNStream()
+    public static MemoryStream CreateRecordNStream(int count)
     {
-        var records = CreateRecordNArray();
+        var records = CreateRecordNArray(count);
         var stream = new MemoryStream();
 
         using (var writer = new TabularWriter(stream, s_dialect, s_options))
@@ -140,9 +138,9 @@ internal static class Factory
         return stream;
     }
 
-    public static MemoryStream CreateRecordDStream()
+    public static MemoryStream CreateRecordDStream(int count)
     {
-        var records = CreateRecordDArray();
+        var records = CreateRecordDArray(count);
         var stream = new MemoryStream();
 
         using (var writer = new TabularWriter(stream, s_dialect, s_options))

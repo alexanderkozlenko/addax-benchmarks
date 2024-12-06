@@ -90,7 +90,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         }
     }
 
-    public void WriteRecords(Stream stream, Record<string>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<string>> records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
@@ -104,7 +104,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         }
     }
 
-    public void WriteRecords(Stream stream, Record<double>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<double>> records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
@@ -118,7 +118,7 @@ public sealed class CsvHelperEngine : BenchmarkEngine, IBenchmarkEngine<Record<s
         }
     }
 
-    public void WriteRecords(Stream stream, Record<DateTime>[] records)
+    public void WriteRecords(Stream stream, IReadOnlyCollection<Record<DateTime>> records)
     {
         using var writer = new CsvWriter(new StreamWriter(stream, leaveOpen: true), s_configuration);
 
