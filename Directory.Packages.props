@@ -3,7 +3,7 @@
     <PackageVersion Include="Addax.Formats.Tabular" Version="2.0.0" />
     <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
-    <PackageVersion Include="Microsoft.Data.Analysis" Version="0.22.0" />
+    <PackageVersion Include="Microsoft.Data.Analysis" Version="0.22.1" />
     <PackageVersion Include="MSTest" Version="3.7.1" />
   </ItemGroup>
 </Project>
