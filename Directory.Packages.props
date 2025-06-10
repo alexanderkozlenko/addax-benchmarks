@@ -4,6 +4,6 @@
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.1" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="Microsoft.Data.Analysis" Version="0.22.2" />
-    <PackageVersion Include="MSTest" Version="3.9.1" />
+    <PackageVersion Include="MSTest" Version="3.9.2" />
   </ItemGroup>
 </Project>
