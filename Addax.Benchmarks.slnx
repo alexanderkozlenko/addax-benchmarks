@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="src/Addax.Benchmarks.Abstractions/Addax.Benchmarks.Abstractions.csproj" />
+  <Project Path="src/Addax.Benchmarks.BenchmarkEngines.UnitTests/Addax.Benchmarks.BenchmarkEngines.UnitTests.csproj" />
+  <Project Path="src/Addax.Benchmarks.BenchmarkEngines/Addax.Benchmarks.BenchmarkEngines.csproj" />
+  <Project Path="src/Addax.Benchmarks/Addax.Benchmarks.csproj" />
+</Solution>
