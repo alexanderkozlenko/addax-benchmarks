@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Addax.Benchmarks.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Addax.Benchmarks.BenchmarkEngines.UnitTests;
 
