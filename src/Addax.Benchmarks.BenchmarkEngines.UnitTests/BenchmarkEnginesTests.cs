@@ -33,7 +33,7 @@ public sealed class BenchmarkEnginesTests
 
         provider.ReadRecords(stream, recordsR);
 
-        Assert.AreEqual(1, recordsR.Count);
+        Assert.HasCount(1, recordsR);
         Assert.AreEqual("________________", recordsR[0].Field0);
         Assert.AreEqual("________________", recordsR[0].Field1);
         Assert.AreEqual("____\"______\"____", recordsR[0].Field2);
@@ -65,7 +65,7 @@ public sealed class BenchmarkEnginesTests
 
         provider.ReadRecords(stream, recordsR);
 
-        Assert.AreEqual(1, recordsR.Count);
+        Assert.HasCount(1, recordsR);
         Assert.AreEqual(Math.E, recordsR[0].Field0);
         Assert.AreEqual(Math.E, recordsR[0].Field1);
         Assert.AreEqual(Math.PI, recordsR[0].Field2);
@@ -97,7 +97,7 @@ public sealed class BenchmarkEnginesTests
 
         provider.ReadRecords(stream, recordsR);
 
-        Assert.AreEqual(1, recordsR.Count);
+        Assert.HasCount(1, recordsR);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field0);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field1);
         Assert.AreEqual(new(1969, 07, 24, 16, 50, 35, DateTimeKind.Utc), recordsR[0].Field2);
