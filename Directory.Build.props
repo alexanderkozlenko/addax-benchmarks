@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AnalysisMode>Recommended</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Features>$(Features);nullablePublicOnly;runtime-async=on;</Features>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <NoWarn>$(NoWarn);EnableGenerateDocumentationFile;</NoWarn>
     <UseArtifactsOutput>true</UseArtifactsOutput>
